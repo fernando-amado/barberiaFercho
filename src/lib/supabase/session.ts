@@ -26,10 +26,20 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
+  let autenticado = true;
   try {
-    await supabase.auth.getUser();
+    const { data } = await supabase.auth.getUser();
+    autenticado = Boolean(data.user);
   } catch {
     // Un fallo de red no debe romper la navegación.
+  }
+
+  // Las páginas protegidas mandan al login si no hay sesión.
+  if (!autenticado && request.nextUrl.pathname.startsWith("/clientes")) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.search = "";
+    return NextResponse.redirect(url);
   }
 
   return response;
