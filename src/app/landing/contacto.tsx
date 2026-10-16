@@ -39,6 +39,12 @@ export default function Contacto() {
             Escribir por WhatsApp
           </a>
           <Link
+            href="/reservas"
+            className="rounded bg-neutral-900 px-5 py-2 font-medium text-white hover:bg-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 motion-safe:transition-colors"
+          >
+            Reservar cita
+          </Link>
+          <Link
             href="/login"
             className="rounded border border-neutral-900 px-5 py-2 font-medium hover:bg-neutral-900 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 motion-safe:transition-colors"
           >

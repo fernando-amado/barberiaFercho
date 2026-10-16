@@ -12,8 +12,14 @@ export default function Hero() {
         </p>
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <Link
-            href="/login"
+            href="/reservas"
             className="rounded bg-white px-5 py-2 font-medium text-neutral-900 hover:bg-neutral-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-safe:transition-colors"
+          >
+            Reservar cita
+          </Link>
+          <Link
+            href="/login"
+            className="rounded border border-white px-5 py-2 font-medium hover:bg-white hover:text-neutral-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-safe:transition-colors"
           >
             Iniciar sesión
           </Link>

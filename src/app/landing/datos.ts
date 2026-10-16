@@ -11,9 +11,9 @@ export type Contacto = {
 };
 
 export const NAV = [
-  { href: "#servicios", etiqueta: "Servicios" },
-  { href: "#precios", etiqueta: "Precios" },
-  { href: "#contacto", etiqueta: "Contacto" },
+  { href: "/#servicios", etiqueta: "Servicios" },
+  { href: "/#precios", etiqueta: "Precios" },
+  { href: "/#contacto", etiqueta: "Contacto" },
 ] as const;
 
 export const SERVICIOS: Servicio[] = [
