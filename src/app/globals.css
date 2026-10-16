@@ -1,3 +1,4 @@
+@layer theme, base, mui, components, utilities;
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -68,48 +69,8 @@
     color: var(--acento-texto);
   }
 
-  label {
-    @apply mb-1 block text-sm font-medium;
-  }
-
   ::placeholder {
     color: var(--texto-suave);
     opacity: 1;
-  }
-}
-
-@layer components {
-  .boton,
-  .boton-secundario,
-  .boton-peligro {
-    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium
-      focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acento
-      disabled:cursor-not-allowed disabled:opacity-60 motion-safe:transition-colors;
-  }
-
-  .boton {
-    @apply bg-acento text-acento-texto shadow-sm hover:bg-acento-hover;
-  }
-
-  .boton-secundario {
-    @apply border border-campo bg-transparent text-texto hover:bg-superficie-alt;
-  }
-
-  .boton-peligro {
-    @apply border border-peligro bg-transparent text-peligro hover:bg-error-fondo;
-  }
-
-  .campo {
-    @apply w-full rounded-md border border-campo bg-superficie px-3 py-2 text-texto
-      focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-acento
-      disabled:cursor-not-allowed disabled:opacity-60 motion-safe:transition-colors;
-  }
-
-  .tarjeta {
-    @apply rounded-xl border border-borde bg-superficie p-6 shadow-sm;
-  }
-
-  .mensaje-error {
-    @apply rounded-md border border-error bg-error-fondo px-3 py-2 text-sm text-error;
   }
 }

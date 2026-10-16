@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 import Encabezado from "@/app/landing/encabezado";
 import Pie from "@/app/landing/pie";
 import { CONTACTO } from "@/app/landing/datos";
@@ -10,13 +13,15 @@ export default function ReservasPage() {
   return (
     <>
       <Encabezado />
-      <main className="mx-auto max-w-xl px-6 py-12">
-        <h1 className="text-3xl font-bold tracking-tight">Reserva tu cita</h1>
-        <p className="mt-2 mb-6 text-suave">{CONTACTO.horario}</p>
-        <div className="tarjeta">
+      <Container component="main" maxWidth="sm" sx={{ py: 6 }}>
+        <Typography variant="h1" sx={{ fontSize: "1.875rem", fontWeight: 700 }}>
+          Reserva tu cita
+        </Typography>
+        <Typography sx={{ mt: 1, mb: 3, color: "text.secondary" }}>{CONTACTO.horario}</Typography>
+        <Paper variant="outlined" sx={{ p: 3 }}>
           <ReservaForm />
-        </div>
-      </main>
+        </Paper>
+      </Container>
       <Pie />
     </>
   );

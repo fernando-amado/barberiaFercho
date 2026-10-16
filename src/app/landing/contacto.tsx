@@ -1,57 +1,64 @@
-import Link from "next/link";
+import Link from "@/app/tema/enlace-next";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import Container from "@mui/material/Container";
+import MuiLink from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { CONTACTO } from "./datos";
 
 export default function Contacto() {
   return (
-    <section id="contacto" aria-labelledby="titulo-contacto">
-      <div className="mx-auto max-w-5xl px-6 py-12">
-        <h2 id="titulo-contacto" className="text-3xl font-bold tracking-tight">
+    <Box component="section" id="contacto" aria-labelledby="titulo-contacto">
+      <Container maxWidth="md" sx={{ py: 6 }}>
+        <Typography id="titulo-contacto" variant="h2" sx={{ fontSize: "1.875rem", fontWeight: 700 }}>
           Contacto
-        </h2>
-        <dl className="tarjeta mt-6 grid gap-4 sm:grid-cols-3">
-          <div>
-            <dt className="font-semibold">Dirección</dt>
-            <dd className="text-suave">{CONTACTO.direccion}</dd>
-          </div>
-          <div>
-            <dt className="font-semibold">Horario</dt>
-            <dd className="text-suave">{CONTACTO.horario}</dd>
-          </div>
-          <div>
-            <dt className="font-semibold">Teléfono</dt>
-            <dd>
-              <a
-                href={CONTACTO.telefonoHref}
-                className="rounded underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acento"
-              >
+        </Typography>
+        <Card
+          component="dl"
+          variant="outlined"
+          sx={{ mt: 3, mb: 0, mx: 0, p: 3, display: "grid", gap: 2, gridTemplateColumns: { xs: "1fr", sm: "repeat(3, 1fr)" } }}
+        >
+          <Box>
+            <Typography component="dt" sx={{ fontWeight: 600 }}>
+              Dirección
+            </Typography>
+            <Typography component="dd" sx={{ m: 0, color: "text.secondary" }}>
+              {CONTACTO.direccion}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography component="dt" sx={{ fontWeight: 600 }}>
+              Horario
+            </Typography>
+            <Typography component="dd" sx={{ m: 0, color: "text.secondary" }}>
+              {CONTACTO.horario}
+            </Typography>
+          </Box>
+          <Box>
+            <Typography component="dt" sx={{ fontWeight: 600 }}>
+              Teléfono
+            </Typography>
+            <Typography component="dd" sx={{ m: 0 }}>
+              <MuiLink href={CONTACTO.telefonoHref} color="inherit">
                 {CONTACTO.telefono}
-              </a>
-            </dd>
-          </div>
-        </dl>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a
-            href={CONTACTO.whatsappHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="boton"
-          >
+              </MuiLink>
+            </Typography>
+          </Box>
+        </Card>
+        <Stack direction="row" useFlexGap sx={{ mt: 4, flexWrap: "wrap", gap: 1.5 }}>
+          <Button href={CONTACTO.whatsappHref} target="_blank" rel="noopener noreferrer" variant="contained">
             Escribir por WhatsApp
-          </a>
-          <Link
-            href="/reservas"
-            className="boton"
-          >
+          </Button>
+          <Button component={Link} href="/reservas" variant="contained">
             Reservar cita
-          </Link>
-          <Link
-            href="/login"
-            className="boton-secundario"
-          >
+          </Button>
+          <Button component={Link} href="/login" variant="outlined" color="inherit">
             Iniciar sesión
-          </Link>
-        </div>
-      </div>
-    </section>
+          </Button>
+        </Stack>
+      </Container>
+    </Box>
   );
 }

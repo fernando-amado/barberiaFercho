@@ -1,3 +1,13 @@
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Paper from "@mui/material/Paper";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 import { PRECIOS } from "./datos";
 
 const formato = new Intl.NumberFormat("es-CO", {
@@ -8,38 +18,46 @@ const formato = new Intl.NumberFormat("es-CO", {
 
 export default function Precios() {
   return (
-    <section id="precios" aria-labelledby="titulo-precios" className="bg-superficie-alt">
-      <div className="mx-auto max-w-5xl px-6 py-12">
-        <h2 id="titulo-precios" className="text-3xl font-bold tracking-tight">
+    <Box component="section" id="precios" aria-labelledby="titulo-precios" sx={{ bgcolor: "action.hover" }}>
+      <Container maxWidth="md" sx={{ py: 6 }}>
+        <Typography id="titulo-precios" variant="h2" sx={{ fontSize: "1.875rem", fontWeight: 700 }}>
           Precios
-        </h2>
-        <div className="mt-6 max-w-xl overflow-x-auto rounded-xl border border-borde bg-superficie">
-          <table className="w-full text-left">
-            <caption className="sr-only">Lista de precios por servicio</caption>
-            <thead>
-              <tr className="border-b border-campo bg-superficie-alt">
-                <th scope="col" className="px-4 py-3 font-semibold">
+        </Typography>
+        <TableContainer component={Paper} variant="outlined" sx={{ mt: 3, maxWidth: 576 }}>
+          <Table>
+            <Box component="caption" className="sr-only">
+              Lista de precios por servicio
+            </Box>
+            <TableHead>
+              <TableRow>
+                <TableCell scope="col" sx={{ fontWeight: 600 }}>
                   Servicio
-                </th>
-                <th scope="col" className="px-4 py-3 text-right font-semibold">
+                </TableCell>
+                <TableCell scope="col" align="right" sx={{ fontWeight: 600 }}>
                   Precio
-                </th>
-              </tr>
-            </thead>
-            <tbody>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
               {PRECIOS.map((p) => (
-                <tr key={p.servicio} className="border-b border-borde last:border-b-0 even:bg-superficie-alt/50">
-                  <th scope="row" className="px-4 py-3 font-normal">
+                <TableRow key={p.servicio} sx={{ "&:last-child td, &:last-child th": { border: 0 } }}>
+                  <TableCell component="th" scope="row">
                     {p.servicio}
-                    {p.nota ? <span className="block text-sm text-suave">{p.nota}</span> : null}
-                  </th>
-                  <td className="px-4 py-3 text-right font-medium">{formato.format(p.valor)}</td>
-                </tr>
+                    {p.nota ? (
+                      <Typography variant="body2" sx={{ color: "text.secondary" }}>
+                        {p.nota}
+                      </Typography>
+                    ) : null}
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 500 }}>
+                    {formato.format(p.valor)}
+                  </TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Container>
+    </Box>
   );
 }

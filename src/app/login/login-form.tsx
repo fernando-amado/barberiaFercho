@@ -2,6 +2,11 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { createClient } from "@/lib/supabase/client";
 
 export default function LoginForm() {
@@ -34,46 +39,38 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={enviar} className="space-y-4">
-      <h1 className="text-3xl font-bold tracking-tight">Iniciar sesión</h1>
-      <div>
-        <label htmlFor="login-correo">Correo</label>
-        <input
-          id="login-correo"
-          type="email"
-          autoComplete="email"
-          required
-          disabled={enviando}
-          className="campo"
-          value={correo}
-          onChange={(e) => setCorreo(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="login-clave">Contraseña</label>
-        <input
-          id="login-clave"
-          type="password"
-          autoComplete="current-password"
-          required
-          disabled={enviando}
-          className="campo"
-          value={clave}
-          onChange={(e) => setClave(e.target.value)}
-        />
-      </div>
-      {error && (
-        <p role="alert" className="mensaje-error">
-          {error}
-        </p>
-      )}
-      <button
-        type="submit"
+    <Stack component="form" onSubmit={enviar} spacing={2}>
+      <Typography variant="h1" sx={{ fontSize: "1.875rem", fontWeight: 700 }}>
+        Iniciar sesión
+      </Typography>
+      <TextField
+        id="login-correo"
+        label="Correo"
+        type="email"
+        required
         disabled={enviando}
-        className="boton w-full"
-      >
+        value={correo}
+        onChange={(e) => setCorreo(e.target.value)}
+        slotProps={{ htmlInput: { autoComplete: "email" } }}
+      />
+      <TextField
+        id="login-clave"
+        label="Contraseña"
+        type="password"
+        required
+        disabled={enviando}
+        value={clave}
+        onChange={(e) => setClave(e.target.value)}
+        slotProps={{ htmlInput: { autoComplete: "current-password" } }}
+      />
+      {error && (
+        <Alert severity="error" role="alert">
+          {error}
+        </Alert>
+      )}
+      <Button type="submit" variant="contained" fullWidth disabled={enviando}>
         {enviando ? "Entrando..." : "Entrar"}
-      </button>
-    </form>
+      </Button>
+    </Stack>
   );
 }

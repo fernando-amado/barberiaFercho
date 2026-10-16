@@ -1,6 +1,12 @@
 "use client";
 
 import { useState, useSyncExternalStore, type FormEvent } from "react";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { SERVICIOS } from "@/app/landing/datos";
 import {
   ApiError,
@@ -83,124 +89,108 @@ export default function ReservaForm() {
 
   if (creada) {
     return (
-      <div role="status" className="space-y-3">
-        <h2 className="text-xl font-semibold">Reserva recibida</h2>
-        <p>
+      <Alert severity="success" role="status">
+        <AlertTitle>Reserva recibida</AlertTitle>
+        <Typography>
           {creada.servicio} el {formatearFecha(creada.fecha)} a las {creada.hora}.
-        </p>
-        <p className="text-suave">
+        </Typography>
+        <Typography sx={{ mt: 1 }}>
           Tu reserva queda pendiente de confirmación. Te contactaremos para confirmarla.
-        </p>
-        <button
+        </Typography>
+        <Button
           type="button"
-          className="boton"
+          variant="contained"
+          sx={{ mt: 2 }}
           onClick={() => {
             setCreada(null);
             setErrores([]);
           }}
         >
           Hacer otra reserva
-        </button>
-      </div>
+        </Button>
+      </Alert>
     );
   }
 
   return (
-    <form onSubmit={enviar} className="space-y-4">
-      <div>
-        <label htmlFor="reserva-nombre">Nombre</label>
-        <input
-          id="reserva-nombre"
-          className="campo"
-          required
-          maxLength={120}
-          autoComplete="name"
-          value={valores.nombre}
-          onChange={(e) => cambiar("nombre", e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="reserva-telefono">Teléfono</label>
-        <input
-          id="reserva-telefono"
-          type="tel"
-          className="campo"
-          required
-          minLength={7}
-          maxLength={20}
-          autoComplete="tel"
-          value={valores.telefono}
-          onChange={(e) => cambiar("telefono", e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="reserva-servicio">Servicio</label>
-        <select
-          id="reserva-servicio"
-          className="campo"
-          required
-          value={valores.servicio}
-          onChange={(e) => cambiar("servicio", e.target.value)}
-        >
-          <option value="">Selecciona un servicio</option>
-          {SERVICIOS.map((s) => (
-            <option key={s.nombre} value={s.nombre}>
-              {s.nombre}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label htmlFor="reserva-fecha">Fecha</label>
-        <input
-          id="reserva-fecha"
-          type="date"
-          className="campo"
-          required
-          min={limites.min}
-          max={limites.max}
-          value={valores.fecha}
-          onChange={(e) => cambiar("fecha", e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="reserva-hora">Hora</label>
-        <select
-          id="reserva-hora"
-          className="campo"
-          required
-          value={valores.hora}
-          onChange={(e) => cambiar("hora", e.target.value)}
-        >
-          <option value="">Selecciona una hora</option>
-          {HORAS_DISPONIBLES.map((h) => (
-            <option key={h} value={h}>
-              {h}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label htmlFor="reserva-notas">Notas (opcional)</label>
-        <textarea
-          id="reserva-notas"
-          className="campo"
-          maxLength={500}
-          rows={3}
-          value={valores.notas}
-          onChange={(e) => cambiar("notas", e.target.value)}
-        />
-      </div>
+    <Stack component="form" onSubmit={enviar} spacing={2}>
+      <TextField
+        id="reserva-nombre"
+        label="Nombre"
+        required
+        value={valores.nombre}
+        onChange={(e) => cambiar("nombre", e.target.value)}
+        slotProps={{ htmlInput: { maxLength: 120, autoComplete: "name" } }}
+      />
+      <TextField
+        id="reserva-telefono"
+        label="Teléfono"
+        type="tel"
+        required
+        value={valores.telefono}
+        onChange={(e) => cambiar("telefono", e.target.value)}
+        slotProps={{ htmlInput: { minLength: 7, maxLength: 20, autoComplete: "tel" } }}
+      />
+      <TextField
+        id="reserva-servicio"
+        label="Servicio"
+        select
+        required
+        value={valores.servicio}
+        onChange={(e) => cambiar("servicio", e.target.value)}
+        slotProps={{ select: { native: true }, inputLabel: { shrink: true } }}
+      >
+        <option value="">Selecciona un servicio</option>
+        {SERVICIOS.map((s) => (
+          <option key={s.nombre} value={s.nombre}>
+            {s.nombre}
+          </option>
+        ))}
+      </TextField>
+      <TextField
+        id="reserva-fecha"
+        label="Fecha"
+        type="date"
+        required
+        value={valores.fecha}
+        onChange={(e) => cambiar("fecha", e.target.value)}
+        slotProps={{ inputLabel: { shrink: true }, htmlInput: { min: limites.min, max: limites.max } }}
+      />
+      <TextField
+        id="reserva-hora"
+        label="Hora"
+        select
+        required
+        value={valores.hora}
+        onChange={(e) => cambiar("hora", e.target.value)}
+        slotProps={{ select: { native: true }, inputLabel: { shrink: true } }}
+      >
+        <option value="">Selecciona una hora</option>
+        {HORAS_DISPONIBLES.map((h) => (
+          <option key={h} value={h}>
+            {h}
+          </option>
+        ))}
+      </TextField>
+      <TextField
+        id="reserva-notas"
+        label="Notas (opcional)"
+        multiline
+        minRows={3}
+        value={valores.notas}
+        onChange={(e) => cambiar("notas", e.target.value)}
+        slotProps={{ htmlInput: { maxLength: 500 } }}
+      />
       {errores.length > 0 && (
-        <div role="alert" className="mensaje-error">
+        <Alert severity="error" role="alert">
           {errores.map((err) => (
             <p key={err}>{err}</p>
           ))}
-        </div>
+        </Alert>
       )}
-      <button type="submit" disabled={enviando} className="boton">
+      <Button type="submit" variant="contained" disabled={enviando}>
         {enviando ? "Enviando..." : "Reservar cita"}
-      </button>
-    </form>
+      </Button>
+    </Stack>
   );
 }

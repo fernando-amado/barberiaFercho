@@ -1,22 +1,29 @@
-import Link from "next/link";
-
-const ENLACE =
-  "rounded underline hover:text-texto focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acento";
+import Link from "@/app/tema/enlace-next";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import MuiLink from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
 export default function Pie() {
   return (
-    <footer className="border-t border-borde bg-superficie">
-      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-6 py-6 text-sm text-suave">
-        <p>© Barbería Fercho. Todos los derechos reservados.</p>
-        <nav aria-label="Pie" className="flex gap-4">
-          <Link href="/login" className={ENLACE}>
+    <Box component="footer" sx={{ borderTop: 1, borderColor: "divider", bgcolor: "background.paper" }}>
+      <Container
+        maxWidth="md"
+        sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 1.5, py: 3 }}
+      >
+        <Typography variant="body2" sx={{ color: "text.secondary" }}>
+          © Barbería Fercho. Todos los derechos reservados.
+        </Typography>
+        <Stack component="nav" aria-label="Pie" direction="row" spacing={2}>
+          <MuiLink component={Link} href="/login" variant="body2" color="text.secondary">
             Iniciar sesión
-          </Link>
-          <Link href="/clientes" className={ENLACE}>
+          </MuiLink>
+          <MuiLink component={Link} href="/clientes" variant="body2" color="text.secondary">
             Clientes
-          </Link>
-        </nav>
-      </div>
-    </footer>
+          </MuiLink>
+        </Stack>
+      </Container>
+    </Box>
   );
 }

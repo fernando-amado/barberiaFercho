@@ -2,6 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { createClient } from "@/lib/supabase/client";
 import type { Cliente } from "@/lib/clientes/validacion";
 import {
@@ -126,15 +133,17 @@ export default function ClientesCrud() {
 
   return (
     <div>
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-3xl font-bold tracking-tight">Clientes</h1>
-        <div className="flex items-center gap-2">
+      <Box sx={{ mb: 3, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 1.5 }}>
+        <Typography variant="h1" sx={{ fontSize: "1.875rem", fontWeight: 700 }}>
+          Clientes
+        </Typography>
+        <Stack direction="row" spacing={1} sx={{ alignItems: "center" }}>
           <BotonTema />
-          <button type="button" className="boton-secundario" onClick={cerrarSesion}>
+          <Button type="button" variant="outlined" color="inherit" onClick={cerrarSesion}>
             Cerrar sesión
-          </button>
-        </div>
-      </div>
+          </Button>
+        </Stack>
+      </Box>
 
       <ClienteForm
         key={editando?.id ?? `nuevo-${formVersion}`}
@@ -152,65 +161,75 @@ export default function ClientesCrud() {
         }
       />
 
-      <div className="mb-3">
-        <label htmlFor="clientes-buscar">Buscar</label>
-        <input
-          id="clientes-buscar"
-          type="search"
-          maxLength={100}
-          className="campo"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-        />
-      </div>
+      <TextField
+        id="clientes-buscar"
+        label="Buscar"
+        type="search"
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        slotProps={{ htmlInput: { maxLength: 100 } }}
+        sx={{ mb: 1.5 }}
+      />
 
       {errorVisible && (
-        <p role="alert" className="mensaje-error mb-3">
+        <Alert severity="error" role="alert" sx={{ mb: 1.5 }}>
           {errorVisible}
-        </p>
+        </Alert>
       )}
 
       {cargando ? (
-        <p className="text-suave">Cargando...</p>
+        <Typography sx={{ color: "text.secondary" }}>Cargando...</Typography>
       ) : clientes.length === 0 ? (
-        !errorVisible && <p className="text-suave">No hay clientes</p>
+        !errorVisible && <Typography sx={{ color: "text.secondary" }}>No hay clientes</Typography>
       ) : (
-        <ul className="space-y-2">
+        <Stack component="ul" spacing={1} sx={{ m: 0, p: 0, listStyle: "none" }}>
           {clientes.map((c) => (
-            <li
+            <Paper
               key={c.id}
-              className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-borde bg-superficie p-4 hover:border-acento motion-safe:transition-colors"
+              component="li"
+              variant="outlined"
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: 1.5,
+                p: 2,
+                "&:hover": { borderColor: "primary.main" },
+              }}
             >
               <div>
-                <p className="font-medium">{c.nombre}</p>
-                <p className="text-sm text-suave">
+                <Typography sx={{ fontWeight: 500 }}>{c.nombre}</Typography>
+                <Typography variant="body2" sx={{ color: "text.secondary" }}>
                   {c.correo ?? "—"} · {c.telefono ?? "—"}
-                </p>
+                </Typography>
               </div>
-              <div className="flex gap-2">
-                <button
+              <Stack direction="row" spacing={1}>
+                <Button
                   type="button"
+                  variant="outlined"
+                  color="inherit"
                   disabled={enviando}
-                  className="boton-secundario"
                   onClick={() => {
                     setErroresForm([]);
                     setEditando(c);
                   }}
                 >
                   Editar
-                </button>
-                <button
+                </Button>
+                <Button
                   type="button"
+                  variant="outlined"
+                  color="error"
                   disabled={enviando}
-                  className="boton-peligro"
                   onClick={() => eliminar(c)}
                 >
                   Eliminar
-                </button>
-              </div>
-            </li>
+                </Button>
+              </Stack>
+            </Paper>
           ))}
-        </ul>
+        </Stack>
       )}
     </div>
   );

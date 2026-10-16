@@ -1,43 +1,51 @@
-import Link from "next/link";
+import Link from "@/app/tema/enlace-next";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
-const BOTON_HERO =
-  "inline-flex items-center justify-center rounded-md border border-white/70 px-5 py-2 font-medium text-white hover:bg-white hover:text-stone-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber-400 motion-safe:transition-colors";
+const BOTON_HERO = {
+  color: "#ffffff",
+  borderColor: "rgba(255,255,255,0.7)",
+  "&:hover": { backgroundColor: "#ffffff", color: "#1c1917", borderColor: "#ffffff" },
+};
 
 export default function Hero() {
   return (
-    <section
+    <Box
+      component="section"
       id="inicio"
       aria-labelledby="titulo-hero"
-      className="bg-linear-to-br from-stone-950 via-stone-900 to-stone-800 text-white"
+      sx={{ background: "linear-gradient(135deg, #0c0a09, #1c1917 50%, #292524)", color: "#ffffff" }}
     >
-      <div className="mx-auto max-w-5xl px-6 py-16 sm:py-24">
-        <h1 id="titulo-hero" className="text-4xl font-bold tracking-tight sm:text-6xl">
-          Barbería <span className="text-amber-400">Fercho</span>
-        </h1>
-        <p className="mt-4 max-w-xl text-lg text-stone-200">
+      <Container maxWidth="md" sx={{ py: { xs: 8, sm: 12 } }}>
+        <Typography id="titulo-hero" variant="h1" sx={{ fontSize: { xs: "2.25rem", sm: "3.75rem" }, fontWeight: 700 }}>
+          Barbería <Box component="span" sx={{ color: "#fbbf24" }}>Fercho</Box>
+        </Typography>
+        <Typography sx={{ mt: 2, maxWidth: 576, fontSize: "1.125rem", color: "#e7e5e4" }}>
           Cortes y barba con estilo, en un ambiente cómodo y con atención personalizada.
-        </p>
-        <div className="mt-8 flex flex-wrap items-center gap-3">
-          <Link
+        </Typography>
+        <Stack direction="row" useFlexGap sx={{ mt: 4, flexWrap: "wrap", alignItems: "center", gap: 1.5 }}>
+          <Button
+            component={Link}
             href="/reservas"
-            className="inline-flex items-center justify-center rounded-md bg-amber-400 px-5 py-2 font-medium text-stone-900 hover:bg-amber-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white motion-safe:transition-colors"
+            variant="contained"
+            sx={{ backgroundColor: "#fbbf24", color: "#1c1917", "&:hover": { backgroundColor: "#fcd34d" } }}
           >
             Reservar cita
-          </Link>
-          <Link href="/login" className={BOTON_HERO}>
+          </Button>
+          <Button component={Link} href="/login" variant="outlined" sx={BOTON_HERO}>
             Iniciar sesión
-          </Link>
-          <Link href="/clientes" className={BOTON_HERO}>
+          </Button>
+          <Button component={Link} href="/clientes" variant="outlined" sx={BOTON_HERO}>
             Clientes
-          </Link>
-          <a
-            href="#servicios"
-            className="rounded px-2 py-2 underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-          >
+          </Button>
+          <Button href="#servicios" sx={{ color: "#ffffff", textDecoration: "underline" }}>
             Ver servicios
-          </a>
-        </div>
-      </div>
-    </section>
+          </Button>
+        </Stack>
+      </Container>
+    </Box>
   );
 }

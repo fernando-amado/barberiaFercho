@@ -1,6 +1,12 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import Alert from "@mui/material/Alert";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import type { Cliente } from "@/lib/clientes/validacion";
 import type { DatosEntrada } from "@/lib/clientes/servicio";
 
@@ -55,79 +61,63 @@ export default function ClienteForm({
   }
 
   return (
-    <form onSubmit={enviar} className="tarjeta mb-6 space-y-4">
-      <h2 className="text-xl font-semibold">
-        {inicial ? "Editar cliente" : "Nuevo cliente"}
-      </h2>
-      <div>
-        <label htmlFor="cliente-nombre">Nombre (obligatorio)</label>
-        <input
+    <Paper component="form" variant="outlined" onSubmit={enviar} sx={{ mb: 3, p: 3 }}>
+      <Stack spacing={2}>
+        <Typography variant="h2" sx={{ fontSize: "1.25rem", fontWeight: 600 }}>
+          {inicial ? "Editar cliente" : "Nuevo cliente"}
+        </Typography>
+        <TextField
           id="cliente-nombre"
-          className="campo"
+          label="Nombre (obligatorio)"
           required
-          maxLength={120}
           value={valores.nombre}
           onChange={(e) => cambiar("nombre", e.target.value)}
+          slotProps={{ htmlInput: { maxLength: 120 } }}
         />
-      </div>
-      <div>
-        <label htmlFor="cliente-correo">Correo</label>
-        <input
+        <TextField
           id="cliente-correo"
+          label="Correo"
           type="email"
-          className="campo"
-          maxLength={254}
           value={valores.correo}
           onChange={(e) => cambiar("correo", e.target.value)}
+          slotProps={{ htmlInput: { maxLength: 254 } }}
         />
-      </div>
-      <div>
-        <label htmlFor="cliente-telefono">
-          Teléfono (7 a 20 caracteres: dígitos, espacios, +, -, paréntesis)
-        </label>
-        <input
+        <TextField
           id="cliente-telefono"
+          label="Teléfono (7 a 20 caracteres: dígitos, espacios, +, -, paréntesis)"
           type="tel"
-          className="campo"
-          maxLength={20}
           value={valores.telefono}
           onChange={(e) => cambiar("telefono", e.target.value)}
+          slotProps={{ htmlInput: { maxLength: 20 } }}
         />
-      </div>
-      <div>
-        <label htmlFor="cliente-detalle">Detalle</label>
-        <textarea
+        <TextField
           id="cliente-detalle"
-          className="campo"
-          maxLength={2000}
-          rows={3}
+          label="Detalle"
+          multiline
+          minRows={3}
           value={valores.detalle}
           onChange={(e) => cambiar("detalle", e.target.value)}
+          slotProps={{ htmlInput: { maxLength: 2000 } }}
         />
-      </div>
-      {(errores.length > 0 || aviso) && (
-        <div role="alert" className="mensaje-error">
-          {aviso && <p>{aviso}</p>}
-          {errores.map((err) => (
-            <p key={err}>{err}</p>
-          ))}
-        </div>
-      )}
-      <div className="flex flex-wrap gap-2">
-        <button type="submit" disabled={enviando} className="boton">
-          {inicial ? "Guardar cambios" : "Crear cliente"}
-        </button>
-        {onCancelar && (
-          <button
-            type="button"
-            disabled={enviando}
-            onClick={onCancelar}
-            className="boton-secundario"
-          >
-            Cancelar
-          </button>
+        {(errores.length > 0 || aviso) && (
+          <Alert severity="error" role="alert">
+            {aviso && <p>{aviso}</p>}
+            {errores.map((err) => (
+              <p key={err}>{err}</p>
+            ))}
+          </Alert>
         )}
-      </div>
-    </form>
+        <Stack direction="row" useFlexGap sx={{ flexWrap: "wrap", gap: 1 }}>
+          <Button type="submit" variant="contained" disabled={enviando}>
+            {inicial ? "Guardar cambios" : "Crear cliente"}
+          </Button>
+          {onCancelar && (
+            <Button type="button" variant="outlined" color="inherit" disabled={enviando} onClick={onCancelar}>
+              Cancelar
+            </Button>
+          )}
+        </Stack>
+      </Stack>
+    </Paper>
   );
 }

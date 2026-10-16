@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
+import Container from "@mui/material/Container";
 import ClientesCrud from "./clientes-crud";
 
 export const metadata: Metadata = { title: "Clientes" };
 
 export default function ClientesPage() {
   return (
-    <main className="mx-auto max-w-3xl px-6 py-8">
+    <Container component="main" maxWidth="md" sx={{ py: 4 }}>
       <ClientesCrud />
-    </main>
+    </Container>
   );
 }
