@@ -1,0 +1,3 @@
+# Configuracion minima de Supabase CLI para barberiaFercho.
+# Proyecto remoto ref: ydqlcqubyjwygtcathaa (se enlaza con `npx supabase link`).
+project_id = "barberiaFercho"
