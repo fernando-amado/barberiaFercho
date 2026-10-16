@@ -12,6 +12,7 @@ import {
   listarClientes,
   type DatosEntrada,
 } from "@/lib/clientes/servicio";
+import BotonTema from "@/app/tema/boton-tema";
 import ClienteForm from "./cliente-form";
 
 const DEBOUNCE_MS = 300;
@@ -125,15 +126,14 @@ export default function ClientesCrud() {
 
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between">
-        <h1 className="text-3xl font-semibold">Clientes</h1>
-        <button
-          type="button"
-          className="rounded border px-3 py-1"
-          onClick={cerrarSesion}
-        >
-          Cerrar sesión
-        </button>
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-3xl font-bold tracking-tight">Clientes</h1>
+        <div className="flex items-center gap-2">
+          <BotonTema />
+          <button type="button" className="boton-secundario" onClick={cerrarSesion}>
+            Cerrar sesión
+          </button>
+        </div>
       </div>
 
       <ClienteForm
@@ -158,29 +158,32 @@ export default function ClientesCrud() {
           id="clientes-buscar"
           type="search"
           maxLength={100}
-          className="w-full rounded border border-gray-300 px-2 py-1"
+          className="campo"
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
       </div>
 
       {errorVisible && (
-        <p role="alert" className="mb-3 text-red-700">
+        <p role="alert" className="mensaje-error mb-3">
           {errorVisible}
         </p>
       )}
 
       {cargando ? (
-        <p>Cargando...</p>
+        <p className="text-suave">Cargando...</p>
       ) : clientes.length === 0 ? (
-        !errorVisible && <p>No hay clientes</p>
+        !errorVisible && <p className="text-suave">No hay clientes</p>
       ) : (
-        <ul className="divide-y divide-gray-200">
+        <ul className="space-y-2">
           {clientes.map((c) => (
-            <li key={c.id} className="flex items-center justify-between gap-2 py-2">
+            <li
+              key={c.id}
+              className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-borde bg-superficie p-4 hover:border-acento motion-safe:transition-colors"
+            >
               <div>
                 <p className="font-medium">{c.nombre}</p>
-                <p className="text-sm">
+                <p className="text-sm text-suave">
                   {c.correo ?? "—"} · {c.telefono ?? "—"}
                 </p>
               </div>
@@ -188,7 +191,7 @@ export default function ClientesCrud() {
                 <button
                   type="button"
                   disabled={enviando}
-                  className="rounded border px-3 py-1 disabled:opacity-60"
+                  className="boton-secundario"
                   onClick={() => {
                     setErroresForm([]);
                     setEditando(c);
@@ -199,7 +202,7 @@ export default function ClientesCrud() {
                 <button
                   type="button"
                   disabled={enviando}
-                  className="rounded border px-3 py-1 disabled:opacity-60"
+                  className="boton-peligro"
                   onClick={() => eliminar(c)}
                 >
                   Eliminar

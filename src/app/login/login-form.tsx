@@ -4,9 +4,6 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-const inputClase =
-  "w-full rounded border border-gray-300 px-2 py-1 disabled:opacity-60";
-
 export default function LoginForm() {
   const router = useRouter();
   const [correo, setCorreo] = useState("");
@@ -37,8 +34,8 @@ export default function LoginForm() {
   }
 
   return (
-    <form onSubmit={enviar} className="space-y-3">
-      <h1 className="text-3xl font-semibold">Iniciar sesión</h1>
+    <form onSubmit={enviar} className="space-y-4">
+      <h1 className="text-3xl font-bold tracking-tight">Iniciar sesión</h1>
       <div>
         <label htmlFor="login-correo">Correo</label>
         <input
@@ -47,7 +44,7 @@ export default function LoginForm() {
           autoComplete="email"
           required
           disabled={enviando}
-          className={inputClase}
+          className="campo"
           value={correo}
           onChange={(e) => setCorreo(e.target.value)}
         />
@@ -60,20 +57,20 @@ export default function LoginForm() {
           autoComplete="current-password"
           required
           disabled={enviando}
-          className={inputClase}
+          className="campo"
           value={clave}
           onChange={(e) => setClave(e.target.value)}
         />
       </div>
       {error && (
-        <p role="alert" className="text-red-700">
+        <p role="alert" className="mensaje-error">
           {error}
         </p>
       )}
       <button
         type="submit"
         disabled={enviando}
-        className="rounded border px-3 py-1 disabled:opacity-60"
+        className="boton w-full"
       >
         {enviando ? "Entrando..." : "Entrar"}
       </button>

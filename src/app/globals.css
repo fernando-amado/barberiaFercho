@@ -1,1 +1,115 @@
 @import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  color-scheme: light;
+  --fondo: #faf8f5;
+  --superficie: #ffffff;
+  --superficie-alt: #f3efe9;
+  --texto: #1c1917;
+  --texto-suave: #57534e;
+  --borde: #d6d3d1;
+  --borde-campo: #78716c;
+  --acento: #b45309;
+  --acento-hover: #92400e;
+  --acento-texto: #ffffff;
+  --error: #b91c1c;
+  --error-fondo: #fef2f2;
+  --peligro: #b91c1c;
+  --peligro-hover: #991b1b;
+}
+
+.dark {
+  color-scheme: dark;
+  --fondo: #0c0a09;
+  --superficie: #1c1917;
+  --superficie-alt: #292524;
+  --texto: #f5f5f4;
+  --texto-suave: #a8a29e;
+  --borde: #44403c;
+  --borde-campo: #78716c;
+  --acento: #f59e0b;
+  --acento-hover: #fbbf24;
+  --acento-texto: #1c1917;
+  --error: #fca5a5;
+  --error-fondo: #450a0a;
+  --peligro: #fca5a5;
+  --peligro-hover: #fecaca;
+}
+
+@theme inline {
+  --color-fondo: var(--fondo);
+  --color-superficie: var(--superficie);
+  --color-superficie-alt: var(--superficie-alt);
+  --color-texto: var(--texto);
+  --color-suave: var(--texto-suave);
+  --color-borde: var(--borde);
+  --color-campo: var(--borde-campo);
+  --color-acento: var(--acento);
+  --color-acento-hover: var(--acento-hover);
+  --color-acento-texto: var(--acento-texto);
+  --color-error: var(--error);
+  --color-error-fondo: var(--error-fondo);
+  --color-peligro: var(--peligro);
+  --color-peligro-hover: var(--peligro-hover);
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: var(--fondo);
+    color: var(--texto);
+  }
+
+  ::selection {
+    background-color: var(--acento);
+    color: var(--acento-texto);
+  }
+
+  label {
+    @apply mb-1 block text-sm font-medium;
+  }
+
+  ::placeholder {
+    color: var(--texto-suave);
+    opacity: 1;
+  }
+}
+
+@layer components {
+  .boton,
+  .boton-secundario,
+  .boton-peligro {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium
+      focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-acento
+      disabled:cursor-not-allowed disabled:opacity-60 motion-safe:transition-colors;
+  }
+
+  .boton {
+    @apply bg-acento text-acento-texto shadow-sm hover:bg-acento-hover;
+  }
+
+  .boton-secundario {
+    @apply border border-campo bg-transparent text-texto hover:bg-superficie-alt;
+  }
+
+  .boton-peligro {
+    @apply border border-peligro bg-transparent text-peligro hover:bg-error-fondo;
+  }
+
+  .campo {
+    @apply w-full rounded-md border border-campo bg-superficie px-3 py-2 text-texto
+      focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-acento
+      disabled:cursor-not-allowed disabled:opacity-60 motion-safe:transition-colors;
+  }
+
+  .tarjeta {
+    @apply rounded-xl border border-borde bg-superficie p-6 shadow-sm;
+  }
+
+  .mensaje-error {
+    @apply rounded-md border border-error bg-error-fondo px-3 py-2 text-sm text-error;
+  }
+}

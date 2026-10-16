@@ -25,11 +25,6 @@ const VALORES_INICIALES = {
 
 type Campo = keyof typeof VALORES_INICIALES;
 
-const inputClase =
-  "w-full rounded border border-neutral-300 px-3 py-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 disabled:opacity-60";
-const botonClase =
-  "rounded bg-neutral-900 px-5 py-2 font-medium text-white hover:bg-neutral-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 disabled:opacity-60 motion-safe:transition-colors";
-
 function mensajesDe(e: unknown): string[] {
   if (e instanceof ApiError) {
     if (e.status === 400) return e.details?.length ? e.details : [e.message];
@@ -88,17 +83,17 @@ export default function ReservaForm() {
 
   if (creada) {
     return (
-      <div role="status" className="space-y-3 rounded border border-neutral-300 p-6">
+      <div role="status" className="space-y-3">
         <h2 className="text-xl font-semibold">Reserva recibida</h2>
         <p>
           {creada.servicio} el {formatearFecha(creada.fecha)} a las {creada.hora}.
         </p>
-        <p className="text-neutral-700">
+        <p className="text-suave">
           Tu reserva queda pendiente de confirmación. Te contactaremos para confirmarla.
         </p>
         <button
           type="button"
-          className={botonClase}
+          className="boton"
           onClick={() => {
             setCreada(null);
             setErrores([]);
@@ -116,7 +111,7 @@ export default function ReservaForm() {
         <label htmlFor="reserva-nombre">Nombre</label>
         <input
           id="reserva-nombre"
-          className={inputClase}
+          className="campo"
           required
           maxLength={120}
           autoComplete="name"
@@ -129,7 +124,7 @@ export default function ReservaForm() {
         <input
           id="reserva-telefono"
           type="tel"
-          className={inputClase}
+          className="campo"
           required
           minLength={7}
           maxLength={20}
@@ -142,7 +137,7 @@ export default function ReservaForm() {
         <label htmlFor="reserva-servicio">Servicio</label>
         <select
           id="reserva-servicio"
-          className={inputClase}
+          className="campo"
           required
           value={valores.servicio}
           onChange={(e) => cambiar("servicio", e.target.value)}
@@ -160,7 +155,7 @@ export default function ReservaForm() {
         <input
           id="reserva-fecha"
           type="date"
-          className={inputClase}
+          className="campo"
           required
           min={limites.min}
           max={limites.max}
@@ -172,7 +167,7 @@ export default function ReservaForm() {
         <label htmlFor="reserva-hora">Hora</label>
         <select
           id="reserva-hora"
-          className={inputClase}
+          className="campo"
           required
           value={valores.hora}
           onChange={(e) => cambiar("hora", e.target.value)}
@@ -189,7 +184,7 @@ export default function ReservaForm() {
         <label htmlFor="reserva-notas">Notas (opcional)</label>
         <textarea
           id="reserva-notas"
-          className={inputClase}
+          className="campo"
           maxLength={500}
           rows={3}
           value={valores.notas}
@@ -197,13 +192,13 @@ export default function ReservaForm() {
         />
       </div>
       {errores.length > 0 && (
-        <div role="alert" className="text-red-700">
+        <div role="alert" className="mensaje-error">
           {errores.map((err) => (
             <p key={err}>{err}</p>
           ))}
         </div>
       )}
-      <button type="submit" disabled={enviando} className={botonClase}>
+      <button type="submit" disabled={enviando} className="boton">
         {enviando ? "Enviando..." : "Reservar cita"}
       </button>
     </form>

@@ -14,10 +14,6 @@ type Props = {
 
 const CAMPOS = ["nombre", "correo", "telefono", "detalle"] as const;
 
-const inputClase =
-  "w-full rounded border border-gray-300 px-2 py-1 disabled:opacity-60";
-const botonClase = "rounded border px-3 py-1 disabled:opacity-60";
-
 export default function ClienteForm({
   inicial,
   enviando,
@@ -59,7 +55,7 @@ export default function ClienteForm({
   }
 
   return (
-    <form onSubmit={enviar} className="mb-6 space-y-3">
+    <form onSubmit={enviar} className="tarjeta mb-6 space-y-4">
       <h2 className="text-xl font-semibold">
         {inicial ? "Editar cliente" : "Nuevo cliente"}
       </h2>
@@ -67,7 +63,7 @@ export default function ClienteForm({
         <label htmlFor="cliente-nombre">Nombre (obligatorio)</label>
         <input
           id="cliente-nombre"
-          className={inputClase}
+          className="campo"
           required
           maxLength={120}
           value={valores.nombre}
@@ -79,7 +75,7 @@ export default function ClienteForm({
         <input
           id="cliente-correo"
           type="email"
-          className={inputClase}
+          className="campo"
           maxLength={254}
           value={valores.correo}
           onChange={(e) => cambiar("correo", e.target.value)}
@@ -92,7 +88,7 @@ export default function ClienteForm({
         <input
           id="cliente-telefono"
           type="tel"
-          className={inputClase}
+          className="campo"
           maxLength={20}
           value={valores.telefono}
           onChange={(e) => cambiar("telefono", e.target.value)}
@@ -102,7 +98,7 @@ export default function ClienteForm({
         <label htmlFor="cliente-detalle">Detalle</label>
         <textarea
           id="cliente-detalle"
-          className={inputClase}
+          className="campo"
           maxLength={2000}
           rows={3}
           value={valores.detalle}
@@ -110,15 +106,15 @@ export default function ClienteForm({
         />
       </div>
       {(errores.length > 0 || aviso) && (
-        <div role="alert" className="text-red-700">
+        <div role="alert" className="mensaje-error">
           {aviso && <p>{aviso}</p>}
           {errores.map((err) => (
             <p key={err}>{err}</p>
           ))}
         </div>
       )}
-      <div className="flex gap-2">
-        <button type="submit" disabled={enviando} className={botonClase}>
+      <div className="flex flex-wrap gap-2">
+        <button type="submit" disabled={enviando} className="boton">
           {inicial ? "Guardar cambios" : "Crear cliente"}
         </button>
         {onCancelar && (
@@ -126,7 +122,7 @@ export default function ClienteForm({
             type="button"
             disabled={enviando}
             onClick={onCancelar}
-            className={botonClase}
+            className="boton-secundario"
           >
             Cancelar
           </button>
